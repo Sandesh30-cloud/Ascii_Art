@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ASCII Art Generator</title>
+    <style>
+        body {
+            background-color: #282c34;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+        }
+        input, button {
+            padding: 8px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        #output {
+            white-space: pre;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Figlet ASCII Art Generator</h2>
+    <input type="text" id="textInput" placeholder="Enter text" />
+    <button onclick="generateAscii()">Generate</button>
+
+    <div id="output">ASCII Art will appear here...</div>
+
+    <script>
+        function generateAscii() {
+            const text = document.getElementById('textInput').value;
+            fetch(`/ascii?text=${encodeURIComponent(text)}`)
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('output').textContent = data;
+                })
+                .catch(err => {
+                    document.getElementById('output').textContent = 'Error fetching ASCII art.';
+                    console.error(err);
+                });
+        }
+    </script>
+</body>
+</html>
